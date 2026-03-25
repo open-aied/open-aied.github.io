@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHAI - International Research Center for Human-AI Agency and Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-50: #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-300: #5eead4;
+      --teal-400: #2dd4bf;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+      --teal-950: #042f2e;
+      --coral-300: #fca5a5;
+      --coral-400: #f87171;
+      --coral-500: #ef4444;
+      --warm-50: #fffbeb;
+      --warm-100: #fef3c7;
+      --warm-400: #fbbf24;
+      --warm-500: #f59e0b;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--slate-800);
+      background: #fff;
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.06); border-bottom: 1px solid var(--slate-200); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 68px;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 1.4rem; color: var(--teal-800);
+      text-decoration: none; letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--teal-500); }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; color: var(--slate-500);
+      text-decoration: none; padding: 8px 16px; border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal-700); background: var(--teal-50); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 36px; height: 36px; position: relative;
+    }
+    .hamburger span {
+      display: block; width: 20px; height: 2px; background: var(--slate-700);
+      position: absolute; left: 8px; transition: 0.3s; border-radius: 1px;
+    }
+    .hamburger span:nth-child(1) { top: 11px; }
+    .hamburger span:nth-child(2) { top: 17px; }
+    .hamburger span:nth-child(3) { top: 23px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: var(--teal-950);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(20,184,166,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,212,191,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(248,113,113,0.06) 0%, transparent 60%);
+    }
+    .hero-dots {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .hero-content {
+      position: relative; max-width: 1200px; margin: 0 auto;
+      padding: 140px 32px 100px; width: 100%;
+      display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center;
+    }
+    .hero-text { }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px; padding: 6px 18px 6px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--teal-300);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeUp 0.7s ease-out;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--teal-400);
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      line-height: 1.15; color: #fff; margin-bottom: 24px;
+      animation: fadeUp 0.7s ease-out 0.1s both;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--teal-300);
+    }
+    .hero-desc {
+      font-size: 1.05rem; color: rgba(255,255,255,0.55); line-height: 1.8;
+      max-width: 520px; margin-bottom: 16px;
+      animation: fadeUp 0.7s ease-out 0.2s both;
+    }
+    .hero-jp {
+      font-size: 1rem; color: rgba(255,255,255,0.35);
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s ease-out 0.25s both;
+    }
+    .hero-actions {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.88rem; font-weight: 600; padding: 12px 24px;
+      border-radius: 10px; text-decoration: none; transition: all 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary { background: var(--teal-500); color: #fff; }
+    .btn-primary:hover { background: var(--teal-600); }
+    .btn-ghost { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.12); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    .hero-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 32px; backdrop-filter: blur(10px);
+      animation: fadeUp 0.7s ease-out 0.35s both;
+    }
+    .hero-card h3 {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--teal-400); margin-bottom: 20px;
+    }
+    .hero-stat { margin-bottom: 20px; }
+    .hero-stat:last-child { margin-bottom: 0; }
+    .hero-stat .label {
+      font-size: 0.78rem; color: rgba(255,255,255,0.35); font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .hero-stat .value {
+      font-size: 0.95rem; color: rgba(255,255,255,0.8); font-weight: 600;
+    }
+    .hero-stat-divider {
+      height: 1px; background: rgba(255,255,255,0.06); margin: 16px 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 1200px; margin: 0 auto; padding: 100px 32px;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal-600); margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: ''; width: 20px; height: 2px; background: var(--teal-400); border-radius: 1px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--slate-900); margin-bottom: 14px;
+    }
+    .section-desc {
+      font-size: 1rem; color: var(--slate-400); max-width: 560px; line-height: 1.75;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .about-card {
+      background: var(--slate-50); border-radius: 16px; padding: 36px 28px;
+      border: 1px solid var(--slate-100);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--teal-400); opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.06);
+      border-color: var(--teal-100);
+    }
+    .about-card:hover::before { opacity: 1; }
+    .about-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .about-icon svg { width: 22px; height: 22px; }
+    .about-icon.i1 { background: var(--teal-100); color: var(--teal-700); }
+    .about-icon.i2 { background: var(--warm-100); color: var(--warm-500); }
+    .about-icon.i3 { background: #dbeafe; color: #2563eb; }
+    .about-card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--slate-800); margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: 0.88rem; color: var(--slate-500); line-height: 1.7;
+    }
+
+    /* ── EVENTS ── */
+    .events-section { background: var(--slate-50); }
+    .events-grid { display: flex; flex-direction: column; gap: 20px; }
+    .ev-card {
+      background: #fff; border-radius: 16px; padding: 0;
+      border: 1px solid var(--slate-200);
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden; display: grid; grid-template-columns: 8px 1fr;
+    }
+    .ev-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.06);
+    }
+    .ev-banner {
+      width: 8px; min-height: 100%; border-radius: 16px 0 0 16px;
+    }
+    .ev-banner.b1 { background: linear-gradient(90deg, var(--teal-400), var(--teal-600)); }
+    .ev-banner.b2 { background: linear-gradient(90deg, #818cf8, #6366f1); }
+    .ev-banner.b3 { background: linear-gradient(90deg, var(--warm-400), var(--coral-400)); }
+    .ev-body {
+      padding: 28px 28px; display: grid;
+      grid-template-columns: 1fr auto; grid-template-rows: auto auto auto;
+      align-items: center; gap: 0 28px;
+    }
+    .ev-body > .ev-date { grid-column: 1; }
+    .ev-body > h3 { grid-column: 1; }
+    .ev-body > .ev-subtitle { grid-column: 1; }
+    .ev-body > .ev-desc { grid-column: 1; }
+    .ev-body > .ev-tags { grid-column: 1; }
+    .ev-body > .ev-link { grid-column: 2; grid-row: 1 / -1; align-self: center; }
+    .ev-date {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 12px;
+    }
+    .ev-date.d1 { color: var(--teal-600); }
+    .ev-date.d2 { color: #6366f1; }
+    .ev-date.d3 { color: var(--coral-500); }
+    .ev-card h3 {
+      font-family: var(--font-display); font-size: 1.25rem;
+      color: var(--slate-800); margin-bottom: 12px; line-height: 1.35;
+    }
+    .ev-card .ev-subtitle {
+      font-size: 0.85rem; color: var(--slate-500); margin-bottom: 8px; font-weight: 500;
+    }
+    .ev-card .ev-desc {
+      font-size: 0.85rem; color: var(--slate-400); line-height: 1.65;
+      margin-bottom: 20px; flex: 1;
+    }
+    .ev-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .ev-tag {
+      font-size: 0.7rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 100px; letter-spacing: 0.02em;
+    }
+    .ev-tag.t-ws { background: var(--teal-50); color: var(--teal-700); }
+    .ev-tag.t-stu { background: #ede9fe; color: #6d28d9; }
+    .ev-tag.t-int { background: var(--warm-50); color: #b45309; }
+    .ev-tag.t-loc { background: var(--slate-100); color: var(--slate-600); }
+    .ev-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.85rem; font-weight: 600; color: var(--teal-600);
+      text-decoration: none; transition: gap 0.2s;
+    }
+    .ev-link:hover { gap: 10px; }
+    .ev-link svg { width: 16px; height: 16px; }
+
+    /* ── MEMBERS ── */
+    .members-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .member-card {
+      background: var(--slate-50); border: 1px solid var(--slate-100);
+      border-radius: 16px; padding: 28px 24px; text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .member-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      border-color: var(--teal-200);
+    }
+    .member-avatar {
+      width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+      margin: 0 auto 16px; display: block;
+      border: 3px solid #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .member-name {
+      font-size: 1rem; font-weight: 700; color: var(--slate-800); margin-bottom: 4px;
+    }
+    .member-role {
+      font-size: 0.8rem; font-weight: 500; color: var(--teal-600); margin-bottom: 4px;
+    }
+    .member-aff {
+      font-size: 0.78rem; color: var(--slate-400); line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--slate-900); color: rgba(255,255,255,0.4); padding: 52px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo {
+      font-family: var(--font-display); font-size: 1.2rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-logo span { color: var(--teal-400); }
+    .footer-text { font-size: 0.82rem; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 0.82rem; color: rgba(255,255,255,0.4);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--teal-300); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .about-grid, .members-grid { grid-template-columns: 1fr; }
+      .ev-body { grid-template-columns: 1fr; }
+      .ev-body > .ev-link { grid-column: 1; grid-row: auto; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .nav-links.active {
+        display: flex; flex-direction: column;
+        position: absolute; top: 68px; left: 0; right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(16px);
+        padding: 16px 24px; gap: 4px;
+        border-bottom: 1px solid var(--slate-200);
+      }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">CH<span>AI</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#members">Members</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">Hiroshima University Research Center</div>
+      <h1>Center for Human-<em>AI</em><br>Agency &amp; Intelligence</h1>
+      <p class="hero-desc">
+        Exploring co-creative foundations where humans and AI learn together &mdash; fostering agency, adaptability, and new forms of collaborative intelligence across learning sciences.
+      </p>
+      <p class="hero-jp">人間・AI主体知性共創研究センター</p>
+      <div class="hero-actions">
+        <a href="#events" class="btn btn-primary">Upcoming Events</a>
+        <a href="#about" class="btn btn-ghost">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Center Overview</h3>
+      <div class="hero-stat">
+        <div class="label">Research Focus</div>
+        <div class="value">AI &times; Learning Sciences &times; Social Implementation</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="label">Core Institutions</div>
+        <div class="value">Hiroshima Univ. &middot; Kyushu Univ. &middot; Ritsumeikan Univ.</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="label">Global Network</div>
+        <div class="value">Japan &middot; Korea &middot; China &middot; Europe &middot; Canada &middot; Australia</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="label">Disciplines</div>
+        <div class="value">Education &middot; AI &middot; Cognitive Science &middot; Design</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-header">
+    <div class="section-label">About CHAI</div>
+    <h2 class="section-title">Our Research Vision</h2>
+    <p class="section-desc">
+      Building co-evolutionary ecosystems for human-AI collaborative learning, bridging theory, system design, and real-world implementation.
+    </p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-icon i1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <h3>Interdisciplinary Research</h3>
+      <p>Crossing AI, education, cognitive science, psychology, and design to understand co-creative learning between humans and AI.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon i2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <h3>International Collaboration</h3>
+      <p>A global network connecting researchers, engineers, and practitioners through visiting units, joint labs, and exchange programs.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon i3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3>Social Implementation</h3>
+      <p>Partnering with schools, businesses, and local governments to translate research into real-world educational impact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events-section" id="events">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Activities</div>
+      <h2 class="section-title">Upcoming Events</h2>
+      <p class="section-desc">
+        Workshops, research meetings, and international events advancing Human-AI co-learning.
+      </p>
+    </div>
+    <div class="events-grid">
+
+      <!-- Student Joint Research Meeting -->
+      <div class="ev-card">
+        <div class="ev-banner b1"></div>
+        <div class="ev-body">
+          <div class="ev-date d1">2026 &middot; Date TBA</div>
+          <h3>Student Joint Research Meeting</h3>
+          <p class="ev-subtitle">学生共同研究会</p>
+          <p class="ev-desc">
+            A collaborative forum for students across partner institutions to present ongoing research, exchange ideas, and build cross-institutional networks in AI and education.
+          </p>
+          <div class="ev-tags">
+            <span class="ev-tag t-stu">Student</span>
+            <span class="ev-tag t-ws">Research Meeting</span>
+          </div>
+          <a href="student-workshop/index.html" class="ev-link">
+            View details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Young Researchers Workshop -->
+      <div class="ev-card">
+        <div class="ev-banner b2"></div>
+        <div class="ev-body">
+          <div class="ev-date d2">2026 &middot; Date TBA</div>
+          <h3>Young Researchers Workshop</h3>
+          <p class="ev-subtitle">若手研究者ワークショップ</p>
+          <p class="ev-desc">
+            An interdisciplinary workshop for early-career researchers exploring emerging technologies in education, featuring keynotes, panels, and collaborative planning.
+          </p>
+          <div class="ev-tags">
+            <span class="ev-tag t-ws">Workshop</span>
+            <span class="ev-tag t-int">Young Researchers</span>
+          </div>
+          <a href="young-researchers-workshop/index.html" class="ev-link">
+            View details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- HAI-Agency Workshop -->
+      <div class="ev-card">
+        <div class="ev-banner b3"></div>
+        <div class="ev-body">
+          <div class="ev-date d3">July 2026 &middot; Seoul, South Korea</div>
+          <h3>HAI-Agency Workshop</h3>
+          <p class="ev-subtitle">@ AIED 2026</p>
+          <p class="ev-desc">
+            The Human-AI Agency Workshop at the 27th International Conference on AI in Education, exploring shared agency between humans and AI in learning contexts.
+          </p>
+          <div class="ev-tags">
+            <span class="ev-tag t-ws">Workshop</span>
+            <span class="ev-tag t-int">AIED 2026</span>
+            <span class="ev-tag t-loc">Seoul</span>
+          </div>
+          <a href="HAI-workshop/index.html" class="ev-link">
+            View details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="section" id="members">
+  <div class="section-header" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">People</div>
+    <h2 class="section-title">Members</h2>
+    <p class="section-desc" style="margin:0 auto;">
+      Researchers and practitioners driving Human-AI co-learning research forward.
+    </p>
+  </div>
+  <div class="members-grid">
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/daiyiling.jpg" alt="Yiling Dai">
+      <div class="member-name">Yiling Dai</div>
+      <div class="member-role">Assistant Professor</div>
+      <div class="member-aff">Hiroshima University, Japan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/boxuan-ma.png" alt="Boxuan Ma">
+      <div class="member-name">Boxuan Ma</div>
+      <div class="member-role">Assistant Professor</div>
+      <div class="member-aff">Kyushu University, Japan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/huiyong-li.jpeg" alt="Huiyong Li">
+      <div class="member-name">Huiyong Li</div>
+      <div class="member-role">Assistant Professor</div>
+      <div class="member-aff">Kyushu University, Japan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/Patrick-Ocheja.jpg" alt="Patrick Ocheja">
+      <div class="member-name">Patrick Ocheja</div>
+      <div class="member-role">AI, Data &amp; Cloud Practitioner</div>
+      <div class="member-aff">Independent Researcher, Canada</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/Kyoungwon-Seo.jpg" alt="Kyoungwon Seo">
+      <div class="member-name">Kyoungwon Seo</div>
+      <div class="member-role">Associate Professor</div>
+      <div class="member-aff">Seoul National University of Science and Technology, South Korea</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/flanagan.jpg" alt="Brendan Flanagan">
+      <div class="member-name">Brendan Flanagan</div>
+      <div class="member-role">Associate Professor</div>
+      <div class="member-aff">Kyoto University, Japan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/HiroakiOGATA.jpg" alt="Hiroaki Ogata">
+      <div class="member-name">Hiroaki Ogata</div>
+      <div class="member-role">Professor</div>
+      <div class="member-aff">Kyoto University, Japan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/yang.jpg" alt="Stephen J.H. Yang">
+      <div class="member-name">Stephen J.H. Yang</div>
+      <div class="member-role">Professor</div>
+      <div class="member-aff">National Taiwan Normal University, Taiwan</div>
+    </div>
+    <div class="member-card">
+      <img class="member-avatar" src="HAI-workshop/img/HOPPE_H.-Ulrich.jpg" alt="H. Ulrich Hoppe">
+      <div class="member-name">H. Ulrich Hoppe</div>
+      <div class="member-role">Professor</div>
+      <div class="member-aff">University of Duisburg-Essen, Germany</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="events-section" id="contact">
+  <div class="section" style="text-align:center; padding-top:72px; padding-bottom:72px;">
+    <div class="section-label" style="justify-content:center;">Contact</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-desc" style="margin:0 auto 20px;">
+      Interested in collaborating or joining our research network?
+    </p>
+    <p style="font-size:0.92rem; color:var(--slate-500);">
+      Graduate School of Advanced Science and Engineering, Hiroshima University<br>
+      広島大学 先進理工系科学研究科
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">CH<span>AI</span></div>
+    <p class="footer-text">&copy; 2026 International Research Center for Human-AI Agency and Intelligence</p>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#members">Members</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const s = hamburger.querySelectorAll('span');
+    if (navLinks.classList.contains('active')) {
+      s[0].style.transform = 'rotate(45deg) translate(4px,4px)';
+      s[1].style.opacity = '0';
+      s[2].style.transform = 'rotate(-45deg) translate(4px,-4px)';
+    } else {
+      s[0].style.transform = ''; s[1].style.opacity = ''; s[2].style.transform = '';
+    }
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.about-card, .ev-card, .member-card').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
